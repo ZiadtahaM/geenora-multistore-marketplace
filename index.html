@@ -6,6 +6,7 @@
     <title>Geenora - المتاجر المتعددة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -13,23 +14,28 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <div class="logo-icon">🏪</div>
+                <div class="logo-icon"><i data-lucide="store"></i></div>
                 Geenora
             </div>
 
-            <nav>
-                <a href="#" class="nav-item">🏠 الرئيسية</a>
-                <a href="#" class="nav-item">🏪 المتاجر</a>
-                <a href="#" class="nav-item">📦 المنتجات</a>
+            <!-- Hamburger Menu for Mobile -->
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+
+            <nav id="main-nav">
+                <a href="#" class="nav-item"><i data-lucide="home" class="nav-icon"></i> الرئيسية</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-bag" class="nav-icon"></i> المتاجر</a>
+                <a href="#" class="nav-item"><i data-lucide="package" class="nav-icon"></i> المنتجات</a>
             </nav>
 
             <div class="action-buttons">
-                <button class="icon-btn">❤️</button>
-                <button class="icon-btn">🛒</button>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+                <button class="icon-btn"><i data-lucide="shopping-cart"></i></button>
 
                 <div class="auth-buttons">
-                    <a href="#" class="btn btn-login">👤 تسجيل الدخول</a>
-                    <a href="#" class="btn btn-register">✏️ تسجيل جديد</a>
+                    <a href="#" class="btn btn-login"><i data-lucide="user" class="btn-icon"></i> تسجيل الدخول</a>
+                    <a href="#" class="btn btn-register"><i data-lucide="pen-line" class="btn-icon"></i> تسجيل جديد</a>
                 </div>
             </div>
         </div>
@@ -38,30 +44,19 @@
     <!-- ==================== HERO SECTION ==================== -->
     <section class="hero">
         <div class="hero-container">
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=600&fit=crop" alt="Shopping Street">
-
-                <div class="new-badge">
-                    <div class="text">جديد</div>
-                    <div class="year">2024</div>
-                </div>
-            </div>
-
             <div class="hero-content">
                 <div class="hero-title">
-                    <span class="sparkle">✨</span>
+                    <i data-lucide="sparkles" class="sparkle"></i>
                     <h1>Geenora</h1>
-                    <span class="emoji">😊</span>
                 </div>
 
                 <h2 class="hero-subtitle">
-                    <span class="icon">🏪</span>
+                    <i data-lucide="store" class="icon"></i>
                     المتاجر المتعددة
                 </h2>
 
                 <p class="hero-description">
-                    اكتشف تجربة تسوق فريدة تجمع أفضل المتاجر والبائعين في منصة<br>
-                    واحدة سهلة الاستخدام
+                    اكتشف تجربة تسوق فريدة تجمع أفضل المتاجر والبائعين في منصة واحدة سهلة الاستخدام
                 </p>
 
                 <div class="stats">
@@ -80,8 +75,16 @@
                 </div>
 
                 <div class="cta-buttons">
-                    <a href="#" class="cta-btn cta-primary">🛍️ ابدأ التسوق الآن</a>
-                    <a href="#" class="cta-btn cta-secondary">📝 للبائعين: انضم الآن ←</a>
+                    <a href="#" class="cta-btn cta-primary"><i data-lucide="shopping-bag" class="btn-icon"></i> ابدأ التسوق الآن</a>
+                    <a href="#" class="cta-btn cta-secondary"><i data-lucide="clipboard-edit" class="btn-icon"></i> للبائعين: انضم الآن ←</a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=600&fit=crop" alt="Shopping Street">
+                <div class="new-badge">
+                    <div class="text">جديد</div>
+                    <div class="year">2024</div>
                 </div>
             </div>
         </div>
@@ -98,25 +101,19 @@
                     <div class="feature-content">
                         <h3 class="feature-title">خيارات متعددة</h3>
                         <p class="feature-description">
-                            عرض مجموعة واسعة من المنتجات والخدمات من<br>
-                            العديد من البائعين لتناسب كل احتياج
+                            عرض مجموعة واسعة من المنتجات والخدمات من العديد من البائعين لتناسب كل احتياج
                         </p>
                     </div>
                 </div>
 
                 <div class="feature-card yellow">
                     <div class="feature-image-wrapper">
-                        <img 
-                        src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" 
-                        alt="تسوق سهل"
-                        class="feature-image"
-                    />
+                        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="تسوق سهل" class="feature-image">
                     </div>
                     <div class="feature-content">
                         <h3 class="feature-title">تسوق سهل</h3>
                         <p class="feature-description">
-                            تصفح المنتجات والخدمات بسهولة من تجار<br>
-                            مختلفين بشكل ملائم في مكان واحد
+                            تصفح المنتجات والخدمات بسهولة من تجار مختلفين بشكل ملائم في مكان واحد
                         </p>
                     </div>
                 </div>
@@ -128,8 +125,7 @@
                     <div class="feature-content">
                         <h3 class="feature-title">أسعار تنافسية</h3>
                         <p class="feature-description">
-                            مقارنة الأسعار بسهولة بين البائعين المختلفين<br>
-                            للحصول على أفضل العروض
+                            مقارنة الأسعار بسهولة بين البائعين المختلفين للحصول على أفضل العروض
                         </p>
                     </div>
                 </div>
@@ -153,17 +149,17 @@
 
                 <div class="feature-boxes">
                     <div class="feature-box">
-                        <div class="feature-box-icon orange-icon">📈</div>
+                        <div class="feature-box-icon orange-icon"><i data-lucide="trending-up"></i></div>
                         <div class="feature-box-text">منتجات عالية الجودة</div>
                     </div>
 
                     <div class="feature-box">
-                        <div class="feature-box-icon cyan-icon">🛡️</div>
+                        <div class="feature-box-icon cyan-icon"><i data-lucide="shield-check"></i></div>
                         <div class="feature-box-text">خدمة عملاء ممتازة</div>
                     </div>
 
                     <div class="feature-box">
-                        <div class="feature-box-icon pink-icon">⚡</div>
+                        <div class="feature-box-icon pink-icon"><i data-lucide="zap"></i></div>
                         <div class="feature-box-text">شحن سريع وموثوق</div>
                     </div>
                 </div>
@@ -173,9 +169,8 @@
 
             <div class="store-image-wrapper">
                 <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=600&fit=crop" alt="متاجر متعددة">
-
                 <div class="floating-store-badge">
-                    <div class="icon">🏪</div>
+                    <div class="icon"><i data-lucide="store" style="width: 40px; height: 40px;"></i></div>
                 </div>
             </div>
         </div>
@@ -195,7 +190,7 @@
                 <div class="step-wrapper">
                     <div class="step-item">
                         <div class="step-icon-wrapper">
-                            <div class="step-icon pink-bg">👤+</div>
+                            <div class="step-icon pink-bg"><i data-lucide="user-plus" style="width: 40px; height: 40px;"></i></div>
                             <div class="step-number">01</div>
                         </div>
                         <h3 class="step-title">التسجيل</h3>
@@ -206,7 +201,7 @@
                 <div class="step-wrapper">
                     <div class="step-item">
                         <div class="step-icon-wrapper">
-                            <div class="step-icon orange-bg">🔍</div>
+                            <div class="step-icon orange-bg"><i data-lucide="search" style="width: 40px; height: 40px;"></i></div>
                             <div class="step-number">02</div>
                         </div>
                         <h3 class="step-title">التصفح</h3>
@@ -217,7 +212,7 @@
                 <div class="step-wrapper">
                     <div class="step-item">
                         <div class="step-icon-wrapper">
-                            <div class="step-icon cyan-bg">💳</div>
+                            <div class="step-icon cyan-bg"><i data-lucide="credit-card" style="width: 40px; height: 40px;"></i></div>
                             <div class="step-number">03</div>
                         </div>
                         <h3 class="step-title">الدفع</h3>
@@ -228,7 +223,7 @@
                 <div class="step-wrapper">
                     <div class="step-item">
                         <div class="step-icon-wrapper">
-                            <div class="step-icon yellow-bg">📦</div>
+                            <div class="step-icon yellow-bg"><i data-lucide="package" style="width: 40px; height: 40px;"></i></div>
                             <div class="step-number">04</div>
                         </div>
                         <h3 class="step-title">التوصيل</h3>
@@ -252,8 +247,7 @@
             <div class="payment-content">
                 <div class="workspace-wrapper">
                     <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop" alt="Workspace" class="workspace-image">
-
-                    <div class="floating-payment-icon">💳</div>
+                    <div class="floating-payment-icon"><i data-lucide="credit-card"></i></div>
                 </div>
 
                 <div class="payment-cards">
@@ -262,11 +256,11 @@
                             <h3 class="payment-card-title">بطاقات الائتمان</h3>
                             <p class="payment-card-description">ادفع بأمان باستخدام بطاقتك</p>
                             <div class="secure-badge">
-                                <span class="check-icon">✅</span>
+                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
                                 <span>دفع آمن ومضمون</span>
                             </div>
                         </div>
-                        <div class="payment-card-icon">💳</div>
+                        <div class="payment-card-icon"><i data-lucide="credit-card" style="width: 36px; height: 36px;"></i></div>
                     </div>
 
                     <div class="payment-card card-orange">
@@ -274,11 +268,11 @@
                             <h3 class="payment-card-title">المحفظة الإلكترونية</h3>
                             <p class="payment-card-description">استخدم محفظتك الرقمية</p>
                             <div class="secure-badge">
-                                <span class="check-icon">✅</span>
+                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
                                 <span>دفع آمن ومضمون</span>
                             </div>
                         </div>
-                        <div class="payment-card-icon">👛</div>
+                        <div class="payment-card-icon"><i data-lucide="wallet" style="width: 36px; height: 36px;"></i></div>
                     </div>
 
                     <div class="payment-card card-cyan">
@@ -286,11 +280,11 @@
                             <h3 class="payment-card-title">التحويل البنكي</h3>
                             <p class="payment-card-description">حول مباشرة من حسابك</p>
                             <div class="secure-badge">
-                                <span class="check-icon">✅</span>
+                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
                                 <span>دفع آمن ومضمون</span>
                             </div>
                         </div>
-                        <div class="payment-card-icon">🏦</div>
+                        <div class="payment-card-icon"><i data-lucide="landmark" style="width: 36px; height: 36px;"></i></div>
                     </div>
                 </div>
             </div>
@@ -302,7 +296,7 @@
         <div class="getting-started-container">
             <div class="getting-started-header">
                 <h2>
-                    <span class="gradient-orange">ابدأ الآن</span><span class="sparkle">✨</span>
+                    <span class="gradient-orange">ابدأ الآن</span><i data-lucide="sparkles" class="sparkle"></i>
                 </h2>
                 <p class="getting-started-subtitle">انضم إلى آلاف العملاء السعداء واستمتع بتجربة تسوق لا مثيل لها</p>
             </div>
@@ -313,15 +307,15 @@
                     <h3 class="card-title">تسجيل الدخول</h3>
                     <ul class="card-features">
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>إنشاء حساب مجاني</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>إدارة الطلبات بسهولة</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>الحصول على عروض حصرية</span>
                         </li>
                     </ul>
@@ -332,15 +326,15 @@
                     <h3 class="card-title">استعراض المتاجر</h3>
                     <ul class="card-features">
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>استعراض المعلومات التجارية</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>مقارنة المنتجات والأسعار</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>العثور على أفضل العروض</span>
                         </li>
                     </ul>
@@ -351,15 +345,15 @@
                     <h3 class="card-title">ابدأ التسوق</h3>
                     <ul class="card-features">
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>تعرف على طرق الدفع المتاحة</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>اختر الوسيلة الأنسب لك</span>
                         </li>
                         <li>
-                            <span class="check-icon">✅</span>
+                            <span class="check-icon"><i data-lucide="check"></i></span>
                             <span>تسوق بثقة وأمان تام</span>
                         </li>
                     </ul>
