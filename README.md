@@ -1,5 +1,13 @@
 # Geenora Multi-Store Marketplace
 
+
+## Visual Preview
+
+<div align="center">
+  <img src="docs/images/preview.png" alt="Geenora Multi-Store Marketplace Platform Interface Preview" width="100%" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" />
+</div>
+
+
 Geenora is a responsive Arabic Right-to-Left (RTL) multi-vendor e-commerce storefront. The interface is optimized for MENA regional commerce with native Cairo typography, CSS Grid and Flexbox layouts, and client-side cart interactions.
 
 ## Architecture and Core Features
