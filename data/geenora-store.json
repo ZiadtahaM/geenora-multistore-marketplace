@@ -636,6 +636,52 @@
       "fundsReleased": true,
       "createdAt": "2026-10-20T15:11:41.387Z",
       "deliveredAt": "2026-10-20T15:11:41.410Z"
+    },
+    {
+      "orderId": "ord-1792514695684-857",
+      "buyerPhone": "+201001234567",
+      "merchantId": "merch-1",
+      "productId": "prod-1",
+      "productName": "Premium Egyptian Cotton Bedding Set",
+      "quantity": 1,
+      "grossPiasters": 125000,
+      "platformTakeRatePiasters": 18750,
+      "netMerchantPiasters": 106250,
+      "state": "ESCROW_LOCKED",
+      "fundsReleased": false,
+      "createdAt": "2026-10-20T16:44:55.684Z"
+    },
+    {
+      "orderId": "cod-1792514918986-153",
+      "buyerPhone": "+201001234567",
+      "deliveryAddress": "القاهرة الجديدة",
+      "merchantId": "merch-1",
+      "productId": "prod-1",
+      "productName": "Premium Egyptian Cotton Bedding Set",
+      "quantity": 1,
+      "grossPiasters": 125000,
+      "platformTakeRatePiasters": 18750,
+      "netMerchantPiasters": 106250,
+      "state": "COD_CONFIRMATION_PENDING",
+      "confirmationExpiresAt": "2026-10-20T20:48:38.986Z",
+      "whatsappConfirmationUrl": "https://wa.me/201001234567?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%88%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%D8%8C%20%D9%86%D9%88%D8%AF%20%D8%AA%D8%A3%D9%83%D9%8A%D8%AF%20%D8%B7%D9%84%D8%A8%D9%83%20%D9%85%D9%86%20%D9%85%D8%AA%D8%AC%D8%B1%20%D8%AC%D9%8A%D9%86%D9%88%D8%B1%D8%A7%3A%20(Premium%20Egyptian%20Cotton%20Bedding%20Set%20-%20%D8%B9%D8%AF%D8%AF%201)%20%D8%A8%D8%A5%D8%AC%D9%85%D8%A7%D9%84%D9%8A%201250.00%20%D8%AC.%D9%85%D8%8C%20%D9%84%D8%B4%D8%AD%D9%86%D9%87%20%D8%A5%D9%84%D9%89%3A%20%D8%A7%D9%84%D8%B9%D9%86%D9%88%D8%A7%D9%86%20%D8%A7%D9%84%D9%85%D8%AD%D8%AF%D8%AF.%0A%D9%8A%D8%B1%D8%AC%D9%89%20%D8%A7%D9%84%D8%B6%D8%BA%D8%B7%20%D9%84%D8%AA%D8%A3%D9%83%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D8%B4%D8%AD%D9%86%D8%A9%20%D9%88%D8%AA%D8%AC%D9%86%D8%A8%20%D8%A5%D9%84%D8%BA%D8%A7%D8%A6%D9%87%D8%A7%3A%0Ahttps%3A%2F%2Fgeenora.com%2Forders%2Fconfirm%3Forder%3Dord-1792514918986",
+      "confirmed": false,
+      "fundsReleased": false,
+      "createdAt": "2026-10-20T16:48:38.986Z"
+    },
+    {
+      "orderId": "ord-1792515365308-263",
+      "buyerPhone": "+201001234567",
+      "merchantId": "merch-1",
+      "productId": "prod-1",
+      "productName": "Premium Egyptian Cotton Bedding Set",
+      "quantity": 1,
+      "grossPiasters": 125000,
+      "platformTakeRatePiasters": 18750,
+      "netMerchantPiasters": 106250,
+      "state": "ESCROW_LOCKED",
+      "fundsReleased": false,
+      "createdAt": "2026-10-20T16:56:05.308Z"
     }
   ],
   "proptechLeads": [
@@ -979,6 +1025,21 @@
       "contactMethod": "WHATSAPP_REPLY_WEBHOOK",
       "contactProofVerified": true,
       "disarmedAt": "2026-10-20T16:37:31.756Z",
+      "notes": "10-minute decay watchdog disarmed via verified WHATSAPP_REPLY_WEBHOOK event."
+    },
+    {
+      "leadId": "lead-1792514578593",
+      "buyerName": "Moustafa Kamel",
+      "buyerPhone": "+201011223344",
+      "brokerId": "brk-1",
+      "brokerName": "Ahmed El-Kady",
+      "whatsappDeepLink": "https://wa.me/201009876543?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D8%A8%D8%AA%D9%86%20Ahmed%20El-Kady%D8%8C%20%D9%84%D8%AF%D9%8A%D9%86%D8%A7%20%D8%B9%D9%85%D9%8A%D9%84%20%D8%AC%D8%AF%D9%8A%D8%AF%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%3A%20undefined%20(%D9%85%D9%8A%D8%B2%D8%A7%D9%86%D9%8A%D8%A9%3A%20NaN%20%D8%AC.%D9%85).%20%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%85%D9%8A%D9%84%3A%20Moustafa%20Kamel%20-%20%2B201011223344.%20%D9%8A%D8%B1%D8%AC%D9%89%20%D8%A7%D9%84%D9%85%D8%AA%D8%A7%D8%A8%D8%B9%D8%A9%20%D9%88%D8%AA%D8%AD%D8%AF%D9%8A%D8%AB%20%D8%A7%D9%84%D8%A8%D9%88%D8%B1%D8%AA%D8%A7%D9%84.",
+      "contacted": true,
+      "createdAt": "2026-10-20T16:42:58.593Z",
+      "expiresAt": "2026-10-20T16:52:58.593Z",
+      "contactMethod": "WHATSAPP_REPLY_WEBHOOK",
+      "contactProofVerified": true,
+      "disarmedAt": "2026-10-20T16:42:58.607Z",
       "notes": "10-minute decay watchdog disarmed via verified WHATSAPP_REPLY_WEBHOOK event."
     }
   ],
