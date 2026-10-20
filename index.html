@@ -1,374 +1,689 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geenora - المتاجر المتعددة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geenora — منصة جينورا للمتاجر المتعددة والتجارة الإلكترونية</title>
+  <meta name="description" content="منصة جينورا الرائدة للتجارة الإلكترونية والمتاجر المتعددة في الشرق الأوسط وشمال أفريقيا">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b'
+            },
+            accent: {
+              500: '#f59e0b',
+              600: '#d97706'
+            },
+            dark: {
+              bg: '#090d16',
+              surface: '#0f172a',
+              card: '#161f38',
+              border: '#243054'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #243054; border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #10b981; }
+  </style>
 </head>
-<body>
-    <!-- ==================== HEADER ==================== -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon"><i data-lucide="store"></i></div>
-                Geenora
+<body class="bg-[#090d16] text-slate-100 antialiased min-h-screen selection:bg-emerald-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-emerald-900/60 via-slate-900 to-emerald-900/60 border-b border-emerald-500/20 text-xs py-2 px-4 text-center font-medium text-emerald-300 flex items-center justify-center gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span>عروض أسبوع الانطلاق: شحن مجاني لكافة المتاجر عند الشراء بقيمة 300 ر.س فأكثر بكود <strong class="text-white font-mono bg-emerald-800/60 px-1.5 py-0.5 rounded border border-emerald-500/30">GEENORA2026</strong></span>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 border-b border-slate-800 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition duration-200">
+            G
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-2xl font-black tracking-tight text-white font-outfit">Geenora</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">المتاجر المتعددة</span>
+            </div>
+            <span class="text-[11px] text-slate-400 block -mt-1 font-medium">سوق المتاجر الموثوقة الأول</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Live Search Bar -->
+      <div class="hidden lg:flex flex-1 max-w-lg relative">
+        <input type="text" id="searchInput" placeholder="ابحث عن متجر، منتج، علامة تجارية..." 
+          class="w-full bg-[#131b2e] border border-slate-700/80 rounded-2xl py-2.5 pr-11 pl-4 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition">
+        <svg class="w-5 h-5 text-slate-400 absolute right-3.5 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+
+      <!-- Navigation Links & Actions -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-300">
+        <a href="#stores" class="hover:text-emerald-400 transition">المتاجر</a>
+        <a href="#products" class="hover:text-emerald-400 transition">المنتجات</a>
+        <a href="#merchant" class="hover:text-emerald-400 transition">بوابة التجار</a>
+        <a href="#about" class="hover:text-emerald-400 transition">عن جينورا</a>
+      </nav>
+
+      <!-- User & Cart Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Cart Button -->
+        <button id="cartBtn" class="relative p-2.5 rounded-xl bg-[#131b2e] border border-slate-700 text-slate-300 hover:text-white hover:border-emerald-500 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          <span id="cartCount" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-emerald-500 text-white font-bold text-xs flex items-center justify-center shadow">2</span>
+        </button>
+
+        <!-- Merchant Auth CTA -->
+        <a href="#merchant" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5">
+          <span>تسجيل كتاجر</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-800">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-7 text-center lg:text-right">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-bold text-emerald-400 mb-6">
+            ✨ المنصة الأسرع نمواً للتجارة الرقمية والمتاجر المعتمدة
+          </div>
+          <h1 class="text-4xl sm:text-6xl font-black text-white leading-[1.25] tracking-tight">
+            اكتشف آلاف المتاجر والبائعين في <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">منصة واحدة متكاملة</span>
+          </h1>
+          <p class="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+            جينورا تجمع لك نُخبة المتاجر المستقلة والعلامات التجارية المحلية في تجربة تسوق واحدة فائقة السرعة، مع دفع موحد، شحن سريع، وضمان حماية المشتري والبائع.
+          </p>
+
+          <!-- Metrics Counters -->
+          <div class="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <span class="text-3xl font-black text-white font-outfit">500+</span>
+              <span class="text-xs text-slate-400 block mt-1 font-medium">متجر معتمد</span>
+            </div>
+            <div>
+              <span class="text-3xl font-black text-emerald-400 font-outfit">18,500+</span>
+              <span class="text-xs text-slate-400 block mt-1 font-medium">منتج أصلي</span>
+            </div>
+            <div>
+              <span class="text-3xl font-black text-white font-outfit">99.8%</span>
+              <span class="text-xs text-slate-400 block mt-1 font-medium">نسبة رضا المشترين</span>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
+            <a href="#stores" class="px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base transition shadow-xl shadow-emerald-600/25 flex items-center gap-2">
+              <span>تصفح المتاجر الآن</span>
+              <span>←</span>
+            </a>
+            <a href="#merchant" class="px-7 py-4 rounded-2xl bg-[#131b2e] hover:bg-[#1a253f] border border-slate-700 text-slate-200 font-bold text-base transition">
+              افتح متجرك معنا مجاناً
+            </a>
+          </div>
+        </div>
+
+        <!-- Interactive Hero Feature Card -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-[#161f38] to-[#0f172a] border border-slate-700/80 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-700/60">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center">🛍️</div>
+                <div>
+                  <h4 class="font-bold text-white text-sm">متجر الأسبوع المميز</h4>
+                  <span class="text-xs text-emerald-400 font-medium">عطارة الأندلس & التوابل النادرة</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">موثق ✓</span>
             </div>
 
-            <!-- Hamburger Menu for Mobile -->
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
-                <i data-lucide="menu"></i>
+            <div class="space-y-4">
+              <div class="p-4 rounded-2xl bg-[#0b101d] border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xl">🌿</div>
+                  <div>
+                    <h5 class="font-bold text-white text-sm">زعفران سوبر نقيل أصلي</h5>
+                    <span class="text-xs text-slate-400">شحن مباشر من المزرعة</span>
+                  </div>
+                </div>
+                <div class="text-left">
+                  <span class="font-black text-emerald-400 font-outfit text-base">145 ر.س</span>
+                  <span class="text-[10px] text-slate-400 block line-through">190 ر.س</span>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-[#0b101d] border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-xl">🍯</div>
+                  <div>
+                    <h5 class="font-bold text-white text-sm">عسل سدر جبلي فاخر</h5>
+                    <span class="text-xs text-slate-400">مفحوص مخبرياً 100%</span>
+                  </div>
+                </div>
+                <div class="text-left">
+                  <span class="font-black text-emerald-400 font-outfit text-base">220 ر.س</span>
+                  <span class="text-[10px] text-slate-400 block line-through">280 ر.س</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <span>تقييم المتجر: <strong class="text-amber-400">★ 4.98</strong> (1,240 تقييم)</span>
+              <a href="#stores" class="text-emerald-400 font-bold hover:underline">زيارة المتجر ←</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Filter Carousel -->
+  <section class="py-10 border-b border-slate-800/80 bg-[#0c1220]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between gap-4 overflow-x-auto pb-2 custom-scrollbar">
+        <button class="cat-filter active px-5 py-2.5 rounded-2xl bg-emerald-600 text-white text-xs sm:text-sm font-bold whitespace-nowrap shadow-md" data-cat="all">
+          جميع التصنيفات
+        </button>
+        <button class="cat-filter px-5 py-2.5 rounded-2xl bg-[#141c30] hover:bg-[#1a253f] border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-bold whitespace-nowrap" data-cat="perfumes">
+          🌸 العطور والدخون
+        </button>
+        <button class="cat-filter px-5 py-2.5 rounded-2xl bg-[#141c30] hover:bg-[#1a253f] border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-bold whitespace-nowrap" data-cat="organic">
+          🍃 المنتجات العضوية
+        </button>
+        <button class="cat-filter px-5 py-2.5 rounded-2xl bg-[#141c30] hover:bg-[#1a253f] border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-bold whitespace-nowrap" data-cat="crafts">
+          🏺 الحِرف والتحف اليدوية
+        </button>
+        <button class="cat-filter px-5 py-2.5 rounded-2xl bg-[#141c30] hover:bg-[#1a253f] border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-bold whitespace-nowrap" data-cat="fashion">
+          👗 الأزياء التقليدية والمودرن
+        </button>
+        <button class="cat-filter px-5 py-2.5 rounded-2xl bg-[#141c30] hover:bg-[#1a253f] border border-slate-700/60 text-slate-300 text-xs sm:text-sm font-bold whitespace-nowrap" data-cat="tech">
+          ⚡ الإلكترونيات والإكسسوارات
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Stores Section -->
+  <section id="stores" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-outfit">Verified Multi-Store Vendors</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-1">المتاجر المعتمدة الأكثر رواجاً</h2>
+        <p class="text-slate-400 text-sm mt-1">متاجر مستقلة تم التحقق من جودة منتجاتها وسرعة شحنها</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-400">عرض 6 متاجر موثقة</span>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Store Card 1 -->
+      <div class="rounded-3xl bg-[#131b2e] border border-slate-700/70 p-6 hover:border-emerald-500/50 transition duration-300 group flex flex-col justify-between">
+        <div>
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-600 to-yellow-800 text-white font-bold text-2xl flex items-center justify-center shadow">
+                🌿
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-white group-hover:text-emerald-400 transition">عطارة الأندلس</h3>
+                <span class="text-xs text-slate-400">الرياض، المملكة العربية السعودية</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">موثق ✓</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">
+            متخصصون في أجود أنواع الزعفران الطبيعي، الأعشاب البرية النادرة، وزيوت العناية العضوية المعصورة على البارد.
+          </p>
+          <div class="flex items-center gap-4 text-xs text-slate-400 mb-6 font-medium">
+            <span>⭐ <strong class="text-white">4.95</strong> (840)</span>
+            <span>📦 <strong class="text-white">120+</strong> منتج</span>
+            <span>⚡ شحن خلال 24 ساعة</span>
+          </div>
+        </div>
+        <button onclick="filterByStore('عطارة الأندلس')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white font-bold text-xs transition">
+          عرض منتجات المتجر (120)
+        </button>
+      </div>
+
+      <!-- Store Card 2 -->
+      <div class="rounded-3xl bg-[#131b2e] border border-slate-700/70 p-6 hover:border-emerald-500/50 transition duration-300 group flex flex-col justify-between">
+        <div>
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-800 text-white font-bold text-2xl flex items-center justify-center shadow">
+                👑
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-white group-hover:text-emerald-400 transition">دار الهودج للعود</h3>
+                <span class="text-xs text-slate-400">دبي، الإمارات العربية المتحدة</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">تاجر مميز</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">
+            أصالة البخور الخليجي والعود الكمبودي المعتق، وتوليفات العطور الملكية الخاصة بالمناسبات الفاخرة.
+          </p>
+          <div class="flex items-center gap-4 text-xs text-slate-400 mb-6 font-medium">
+            <span>⭐ <strong class="text-white">4.98</strong> (1,510)</span>
+            <span>📦 <strong class="text-white">65+</strong> منتج</span>
+            <span>⚡ شحن دولي متاح</span>
+          </div>
+        </div>
+        <button onclick="filterByStore('دار الهودج للعود')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white font-bold text-xs transition">
+          عرض منتجات المتجر (65)
+        </button>
+      </div>
+
+      <!-- Store Card 3 -->
+      <div class="rounded-3xl bg-[#131b2e] border border-slate-700/70 p-6 hover:border-emerald-500/50 transition duration-300 group flex flex-col justify-between">
+        <div>
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-600 to-emerald-900 text-white font-bold text-2xl flex items-center justify-center shadow">
+                🏺
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-white group-hover:text-emerald-400 transition">أكاسيا للتراث والحرف</h3>
+                <span class="text-xs text-slate-400">الخرطوم / القاهرة</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-xl bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">موثق ✓</span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">
+            صمغ عربي عضوي نقي، منسوجات قطنية يدوية، وتحف فنية مستوحاة من التراث النوبي والسوداني العريق.
+          </p>
+          <div class="flex items-center gap-4 text-xs text-slate-400 mb-6 font-medium">
+            <span>⭐ <strong class="text-white">4.91</strong> (620)</span>
+            <span>📦 <strong class="text-white">48+</strong> منتج</span>
+            <span>⚡ شحن عضوي محمي</span>
+          </div>
+        </div>
+        <button onclick="filterByStore('أكاسيا للتراث والحرف')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white font-bold text-xs transition">
+          عرض منتجات المتجر (48)
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Product Catalog Grid Section -->
+  <section id="products" class="py-16 bg-[#0a0f1d] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-outfit">Live Product Market</span>
+          <h2 class="text-3xl font-black text-white mt-1">كتالوج المنتجات الفورية</h2>
+          <p class="text-slate-400 text-sm mt-1">تصفح وأضف إلى سلتك مباشرة من مختلف البائعين</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <select id="sortSelect" class="bg-[#131b2e] border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-slate-200 focus:outline-none focus:border-emerald-500">
+            <option value="popular">الأعلى مبيعاً</option>
+            <option value="price-low">السعر: من الأقل للأعلى</option>
+            <option value="price-high">السعر: من الأعلى للأقل</option>
+            <option value="rating">التقييم: 5 نجوم</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Products injected dynamically via JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Merchant Portal Onboarding Section -->
+  <section id="merchant" class="py-20 border-t border-slate-800 bg-[#090d16] relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 mb-4">
+            💼 للمصنعين والتجار وأصحاب الحرف
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+            ابدأ البيع على جينورا وضاعف مبيعاتك خلال 48 ساعة
+          </h2>
+          <p class="mt-4 text-slate-300 text-base leading-relaxed">
+            احصل على متجر متكامل بهويتك الخاصة، بوابة دفع آمنة (مدى، Apple Pay، فيزا)، ربط آلي مع كبرى شركات الشحن (أرامكس، سمسا، DHL)، ولوحة تحليلات لحظية لطلباتك وأرباحك.
+          </p>
+          
+          <div class="space-y-4 mt-8">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 mt-0.5">✓</div>
+              <span class="text-sm text-slate-300 font-medium">عمولة منخفضة وشفافة بدون أي رسوم اشتراك شهرية خفية.</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 mt-0.5">✓</div>
+              <span class="text-sm text-slate-300 font-medium">تسوية مالية وإيداع تلقائي للأرباح أسبوعياً في حسابك البنكي.</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 mt-0.5">✓</div>
+              <span class="text-sm text-slate-300 font-medium">دعم فني وتدريب تسويقي مجاني لرفع معدل التحويل لمتجرك.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Merchant Registration Card Form -->
+        <div class="lg:col-span-6">
+          <div class="bg-[#131b2e] rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl">
+            <h3 class="text-xl font-black text-white mb-2">تسجيل تاجر جديد</h3>
+            <p class="text-xs text-slate-400 mb-6">أدخل بيانات متجرك الأساسية لبدء التحقق الفوري</p>
+
+            <form id="merchantForm" onsubmit="handleMerchantSubmit(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم المتجر أو العلامة التجارية</label>
+                <input type="text" required placeholder="مثال: واحة العطور الشرقية" class="w-full bg-[#0b101d] border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1.5">التصنيف التجاري</label>
+                  <select required class="w-full bg-[#0b101d] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <option value="perfumes">عطور وبخور</option>
+                    <option value="organic">منتجات عضوية وغذائية</option>
+                    <option value="crafts">حرف يدوية وتحف</option>
+                    <option value="fashion">أزياء وملابس</option>
+                    <option value="tech">إلكترونيات</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 mb-1.5">الدولة / المدينة</label>
+                  <input type="text" required placeholder="مثال: الرياض" class="w-full bg-[#0b101d] border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">البريد الإلكتروني للعمل</label>
+                <input type="email" required placeholder="merchant@yourbrand.com" class="w-full bg-[#0b101d] border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم الواتساب أو الهاتف</label>
+                <input type="tel" required placeholder="+966 5X XXX XXXX" class="w-full bg-[#0b101d] border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500" dir="ltr">
+              </div>
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition">
+                إرسال طلب الانضمام لشبكة التجار ←
+              </button>
+            </form>
+            <div id="merchantSuccess" class="hidden mt-4 p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs text-center font-bold">
+              🎉 تم استلام طلبك بنجاح! سيتواصل معك مدير حسابات التجار خلال ساعتين لإتمام التفعيل.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide-over Cart Drawer Modal -->
+  <div id="cartModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex justify-end transition duration-300">
+    <div class="w-full max-w-md bg-[#0f172a] border-r border-slate-800 h-full p-6 flex flex-col justify-between shadow-2xl">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🛒</span>
+            <h3 class="font-black text-lg text-white">سلة المشتريات الموحدة</h3>
+          </div>
+          <button id="closeCartBtn" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-sm">✕</button>
+        </div>
+
+        <div id="cartItemsList" class="mt-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar pr-1">
+          <!-- Items rendered dynamically -->
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800">
+        <div class="flex items-center justify-between text-sm text-slate-300 mb-2">
+          <span>المجموع الفرعي:</span>
+          <span id="cartSubtotal" class="font-black text-white font-outfit text-base">365 ر.س</span>
+        </div>
+        <div class="flex items-center justify-between text-xs text-emerald-400 mb-4">
+          <span>الشحن الموحد:</span>
+          <span>مجاني (شامل العرض) ✓</span>
+        </div>
+        <button onclick="alert('تم تفعيل بوابة الدفع الآمنة! جاري التحويل لمعالجة الطلب.')" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+          <span>إتمام الطلب والدفع الآمن</span>
+          <span>←</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="about" class="py-12 bg-[#060a12] border-t border-slate-800/80 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white font-black text-base flex items-center justify-center">G</div>
+          <span class="text-lg font-black text-white font-outfit">Geenora</span>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-400">
+          المنصة الرائدة في جمع المتاجر الإقليمية والتجار المستقلين تحت مظلة تجارة إلكترونية سريعة وآمنة وموثوقة.
+        </p>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-3">عن المنصة</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#about" class="hover:text-emerald-400 transition">من نحن</a></li>
+          <li><a href="#merchant" class="hover:text-emerald-400 transition">انضم كتاجر</a></li>
+          <li><a href="#stores" class="hover:text-emerald-400 transition">دليل المتاجر المعتمدة</a></li>
+          <li><a href="#" class="hover:text-emerald-400 transition">سياسة حماية المشتري</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-3">طرق الدفع والشحن</h4>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono">Mada</span>
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono">Apple Pay</span>
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono">Visa / MC</span>
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono">Tabby</span>
+          <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono">Tamara</span>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-3">ضمان جينورا</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          جميع المتاجر خاضعة لتدقيق السجل التجاري وضمان استرجاع الأموال خلال 14 يوماً في حال عدم مطابقة المنتج.
+        </p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-500">
+      <p>© 2026 Geenora Multi-Store Marketplace. جميع الحقوق محفوظة لشركة جينورا للتجارة الرقمية.</p>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    const products = [
+      { id: 1, name: 'زعفران سوبر نقيل أصلي (5 جم)', store: 'عطارة الأندلس', price: 145, oldPrice: 190, cat: 'organic', icon: '🌿', rating: 4.95, reviews: 312 },
+      { id: 2, name: 'عسل سدر جبلي دوعني فاخر (1 كجم)', store: 'عطارة الأندلس', price: 220, oldPrice: 280, cat: 'organic', icon: '🍯', rating: 4.98, reviews: 450 },
+      { id: 3, name: 'دهن عود كلمنتان مالينو معتق (تولة)', store: 'دار الهودج للعود', price: 390, oldPrice: 480, cat: 'perfumes', icon: '👑', rating: 4.99, reviews: 210 },
+      { id: 4, name: 'بخور مروكي دبل سوبر طبيعي (أوقية)', store: 'دار الهودج للعود', price: 260, oldPrice: 320, cat: 'perfumes', icon: '🪵', rating: 4.92, reviews: 180 },
+      { id: 5, name: 'صمغ عربي هشاب عضوي نقي (500 جم)', store: 'أكاسيا للتراث والحرف', price: 85, oldPrice: 110, cat: 'organic', icon: '🍂', rating: 4.88, reviews: 95 },
+      { id: 6, name: 'ثوب سوداني قطني يدوي مطرز', store: 'أكاسيا للتراث والحرف', price: 340, oldPrice: 420, cat: 'fashion', icon: '👗', rating: 4.93, reviews: 140 },
+      { id: 7, name: 'مبخرة نحاسية دمشقية منقوشة يدوياً', store: 'أكاسيا للتراث والحرف', price: 175, oldPrice: 220, cat: 'crafts', icon: '🏺', rating: 4.85, reviews: 88 },
+      { id: 8, name: 'موزع عطور ومبخرة ذكية بالبطارية', store: 'دار الهودج للعود', price: 130, oldPrice: 165, cat: 'tech', icon: '⚡', rating: 4.79, reviews: 340 }
+    ];
+
+    let cart = [
+      { id: 1, name: 'زعفران سوبر نقيل أصلي (5 جم)', store: 'عطارة الأندلس', price: 145, qty: 1, icon: '🌿' },
+      { id: 2, name: 'عسل سدر جبلي دوعني فاخر (1 كجم)', store: 'عطارة الأندلس', price: 220, qty: 1, icon: '🍯' }
+    ];
+
+    function renderProducts(items) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = items.map(p => `
+        <div class="rounded-3xl bg-[#131b2e] border border-slate-700/60 p-5 hover:border-emerald-500/50 transition duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="w-full h-44 rounded-2xl bg-[#0a0f1d] border border-slate-800 flex items-center justify-center text-5xl mb-4 group-hover:scale-105 transition duration-300">
+              ${p.icon}
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span class="text-emerald-400 font-bold">${p.store}</span>
+              <span>⭐ ${p.rating} (${p.reviews})</span>
+            </div>
+            <h4 class="font-bold text-white text-base mb-2 group-hover:text-emerald-400 transition">${p.name}</h4>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-lg font-black text-white font-outfit">${p.price} ر.س</span>
+              <span class="text-xs text-slate-500 block line-through font-outfit">${p.oldPrice} ر.س</span>
+            </div>
+            <button onclick="addToCart(${p.id})" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1">
+              <span>+ أضف للسلة</span>
             </button>
-
-            <nav id="main-nav">
-                <a href="#" class="nav-item"><i data-lucide="home" class="nav-icon"></i> الرئيسية</a>
-                <a href="#" class="nav-item"><i data-lucide="shopping-bag" class="nav-icon"></i> المتاجر</a>
-                <a href="#" class="nav-item"><i data-lucide="package" class="nav-icon"></i> المنتجات</a>
-            </nav>
-
-            <div class="action-buttons">
-                <button class="icon-btn"><i data-lucide="heart"></i></button>
-                <button class="icon-btn"><i data-lucide="shopping-cart"></i></button>
-
-                <div class="auth-buttons">
-                    <a href="#" class="btn btn-login"><i data-lucide="user" class="btn-icon"></i> تسجيل الدخول</a>
-                    <a href="#" class="btn btn-register"><i data-lucide="pen-line" class="btn-icon"></i> تسجيل جديد</a>
-                </div>
-            </div>
+          </div>
         </div>
-    </header>
+      `).join('');
+    }
 
-    <!-- ==================== HERO SECTION ==================== -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-title">
-                    <i data-lucide="sparkles" class="sparkle"></i>
-                    <h1>Geenora</h1>
-                </div>
+    function renderCart() {
+      const list = document.getElementById('cartItemsList');
+      const count = document.getElementById('cartCount');
+      const subtotal = document.getElementById('cartSubtotal');
+      
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
-                <h2 class="hero-subtitle">
-                    <i data-lucide="store" class="icon"></i>
-                    المتاجر المتعددة
-                </h2>
+      count.textContent = totalQty;
+      subtotal.textContent = totalPrice + ' ر.س';
 
-                <p class="hero-description">
-                    اكتشف تجربة تسوق فريدة تجمع أفضل المتاجر والبائعين في منصة واحدة سهلة الاستخدام
-                </p>
+      if (cart.length === 0) {
+        list.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm font-medium">سلة المشتريات فارغة حالياً</div>`;
+        return;
+      }
 
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number stores">+500</div>
-                        <div class="stat-label">متجر</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number products">+10K</div>
-                        <div class="stat-label">منتج</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number clients">+50K</div>
-                        <div class="stat-label">عميل</div>
-                    </div>
-                </div>
-
-                <div class="cta-buttons">
-                    <a href="#" class="cta-btn cta-primary"><i data-lucide="shopping-bag" class="btn-icon"></i> ابدأ التسوق الآن</a>
-                    <a href="#" class="cta-btn cta-secondary"><i data-lucide="clipboard-edit" class="btn-icon"></i> للبائعين: انضم الآن ←</a>
-                </div>
+      list.innerHTML = cart.map(item => `
+        <div class="p-3.5 rounded-2xl bg-[#0b101d] border border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-xl">${item.icon}</div>
+            <div>
+              <h5 class="font-bold text-white text-xs">${item.name}</h5>
+              <span class="text-[11px] text-emerald-400 font-medium">${item.store} • ${item.price} ر.س</span>
             </div>
-
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=600&fit=crop" alt="Shopping Street">
-                <div class="new-badge">
-                    <div class="text">جديد</div>
-                    <div class="year">2024</div>
-                </div>
-            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="updateCartQty(${item.id}, -1)" class="w-6 h-6 rounded bg-slate-800 text-slate-300 hover:text-white font-bold text-xs">-</button>
+            <span class="text-xs font-bold text-white font-outfit">${item.qty}</span>
+            <button onclick="updateCartQty(${item.id}, 1)" class="w-6 h-6 rounded bg-slate-800 text-slate-300 hover:text-white font-bold text-xs">+</button>
+          </div>
         </div>
-    </section>
+      `).join('');
+    }
 
-    <!-- ==================== FEATURES SECTION ==================== -->
-    <section class="features">
-        <div class="features-container">
-            <div class="features-grid">
-                <div class="feature-card orange">
-                    <div class="feature-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=500&h=350&fit=crop" alt="خيارات متعددة" class="feature-image">
-                    </div>
-                    <div class="feature-content">
-                        <h3 class="feature-title">خيارات متعددة</h3>
-                        <p class="feature-description">
-                            عرض مجموعة واسعة من المنتجات والخدمات من العديد من البائعين لتناسب كل احتياج
-                        </p>
-                    </div>
-                </div>
+    function addToCart(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+      const existing = cart.find(c => c.id === productId);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ id: prod.id, name: prod.name, store: prod.store, price: prod.price, qty: 1, icon: prod.icon });
+      }
+      renderCart();
+      document.getElementById('cartModal').classList.remove('hidden');
+    }
 
-                <div class="feature-card yellow">
-                    <div class="feature-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="تسوق سهل" class="feature-image">
-                    </div>
-                    <div class="feature-content">
-                        <h3 class="feature-title">تسوق سهل</h3>
-                        <p class="feature-description">
-                            تصفح المنتجات والخدمات بسهولة من تجار مختلفين بشكل ملائم في مكان واحد
-                        </p>
-                    </div>
-                </div>
+    function updateCartQty(productId, delta) {
+      const item = cart.find(c => c.id === productId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(c => c.id !== productId);
+      }
+      renderCart();
+    }
 
-                <div class="feature-card pink">
-                    <div class="feature-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=500&h=350&fit=crop" alt="أسعار تنافسية" class="feature-image">
-                    </div>
-                    <div class="feature-content">
-                        <h3 class="feature-title">أسعار تنافسية</h3>
-                        <p class="feature-description">
-                            مقارنة الأسعار بسهولة بين البائعين المختلفين للحصول على أفضل العروض
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    function filterByStore(storeName) {
+      const filtered = products.filter(p => p.store === storeName);
+      renderProducts(filtered);
+      document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    }
 
-    <!-- ==================== CHOOSE STORES SECTION ==================== -->
-    <section class="choose-stores">
-        <div class="choose-stores-container">
-            <div class="choose-content">
-                <div class="trusted-badge">متاجر موثوقة</div>
+    // Category Filter Event Listeners
+    document.querySelectorAll('.cat-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-filter').forEach(b => {
+          b.classList.remove('bg-emerald-600', 'text-white');
+          b.classList.add('bg-[#141c30]', 'text-slate-300');
+        });
+        btn.classList.add('bg-emerald-600', 'text-white');
+        btn.classList.remove('bg-[#141c30]', 'text-slate-300');
 
-                <h2 class="section-title">
-                    <span class="dark-text">اختيار</span> <span class="gradient-text">المتاجر</span>
-                </h2>
+        const cat = btn.getAttribute('data-cat');
+        if (cat === 'all') {
+          renderProducts(products);
+        } else {
+          renderProducts(products.filter(p => p.cat === cat));
+        }
+      });
+    });
 
-                <p class="section-description">
-                    نختار لك أفضل المتاجر والبائعين الموثوقين لضمان تجربة تسوق آمنة وممتعة
-                </p>
+    // Search Input Event Listener
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.store.toLowerCase().includes(q));
+      renderProducts(filtered);
+    });
 
-                <div class="feature-boxes">
-                    <div class="feature-box">
-                        <div class="feature-box-icon orange-icon"><i data-lucide="trending-up"></i></div>
-                        <div class="feature-box-text">منتجات عالية الجودة</div>
-                    </div>
+    // Cart Modal Toggle
+    document.getElementById('cartBtn').addEventListener('click', () => {
+      document.getElementById('cartModal').classList.remove('hidden');
+    });
+    document.getElementById('closeCartBtn').addEventListener('click', () => {
+      document.getElementById('cartModal').classList.add('hidden');
+    });
 
-                    <div class="feature-box">
-                        <div class="feature-box-icon cyan-icon"><i data-lucide="shield-check"></i></div>
-                        <div class="feature-box-text">خدمة عملاء ممتازة</div>
-                    </div>
+    function handleMerchantSubmit(e) {
+      e.preventDefault();
+      document.getElementById('merchantSuccess').classList.remove('hidden');
+      document.getElementById('merchantForm').reset();
+    }
 
-                    <div class="feature-box">
-                        <div class="feature-box-icon pink-icon"><i data-lucide="zap"></i></div>
-                        <div class="feature-box-text">شحن سريع وموثوق</div>
-                    </div>
-                </div>
-
-                <a href="#" class="explore-button">← استكشف المتاجر</a>
-            </div>
-
-            <div class="store-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&h=600&fit=crop" alt="متاجر متعددة">
-                <div class="floating-store-badge">
-                    <div class="icon"><i data-lucide="store" style="width: 40px; height: 40px;"></i></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== HOW IT WORKS SECTION ==================== -->
-    <section class="how-it-works">
-        <div class="how-it-works-container">
-            <div class="how-title">
-                <h2>
-                    <span class="white-text">خط</span> <span class="gradient-text">الوصول</span>
-                </h2>
-                <p class="how-subtitle">أربع خطوات سهلة للبدء في رحلة التسوق</p>
-            </div>
-
-            <div class="steps-container">
-                <div class="step-wrapper">
-                    <div class="step-item">
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon pink-bg"><i data-lucide="user-plus" style="width: 40px; height: 40px;"></i></div>
-                            <div class="step-number">01</div>
-                        </div>
-                        <h3 class="step-title">التسجيل</h3>
-                        <p class="step-description">إنشاء حساب مجاني</p>
-                    </div>
-                </div>
-
-                <div class="step-wrapper">
-                    <div class="step-item">
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon orange-bg"><i data-lucide="search" style="width: 40px; height: 40px;"></i></div>
-                            <div class="step-number">02</div>
-                        </div>
-                        <h3 class="step-title">التصفح</h3>
-                        <p class="step-description">استكشف المنتجات من متاجر متعددة</p>
-                    </div>
-                </div>
-
-                <div class="step-wrapper">
-                    <div class="step-item">
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon cyan-bg"><i data-lucide="credit-card" style="width: 40px; height: 40px;"></i></div>
-                            <div class="step-number">03</div>
-                        </div>
-                        <h3 class="step-title">الدفع</h3>
-                        <p class="step-description">اختر طريقة الدفع المناسبة</p>
-                    </div>
-                </div>
-
-                <div class="step-wrapper">
-                    <div class="step-item">
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon yellow-bg"><i data-lucide="package" style="width: 40px; height: 40px;"></i></div>
-                            <div class="step-number">04</div>
-                        </div>
-                        <h3 class="step-title">التوصيل</h3>
-                        <p class="step-description">استلم طلبك في الوقت المحدد</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== PAYMENT METHODS SECTION ==================== -->
-    <section class="payment-methods">
-        <div class="payment-methods-container">
-            <div class="payment-title">
-                <h2>
-                    <span class="dark-text">طرق الدفع</span> <span class="gradient-text">المتاحة</span>
-                </h2>
-                <p class="payment-subtitle">اختر من بين طرق دفع متنوعة وآمنة</p>
-            </div>
-
-            <div class="payment-content">
-                <div class="workspace-wrapper">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop" alt="Workspace" class="workspace-image">
-                    <div class="floating-payment-icon"><i data-lucide="credit-card"></i></div>
-                </div>
-
-                <div class="payment-cards">
-                    <div class="payment-card card-pink">
-                        <div class="payment-card-content">
-                            <h3 class="payment-card-title">بطاقات الائتمان</h3>
-                            <p class="payment-card-description">ادفع بأمان باستخدام بطاقتك</p>
-                            <div class="secure-badge">
-                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
-                                <span>دفع آمن ومضمون</span>
-                            </div>
-                        </div>
-                        <div class="payment-card-icon"><i data-lucide="credit-card" style="width: 36px; height: 36px;"></i></div>
-                    </div>
-
-                    <div class="payment-card card-orange">
-                        <div class="payment-card-content">
-                            <h3 class="payment-card-title">المحفظة الإلكترونية</h3>
-                            <p class="payment-card-description">استخدم محفظتك الرقمية</p>
-                            <div class="secure-badge">
-                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
-                                <span>دفع آمن ومضمون</span>
-                            </div>
-                        </div>
-                        <div class="payment-card-icon"><i data-lucide="wallet" style="width: 36px; height: 36px;"></i></div>
-                    </div>
-
-                    <div class="payment-card card-cyan">
-                        <div class="payment-card-content">
-                            <h3 class="payment-card-title">التحويل البنكي</h3>
-                            <p class="payment-card-description">حول مباشرة من حسابك</p>
-                            <div class="secure-badge">
-                                <span class="check-icon"><i data-lucide="check-circle-2"></i></span>
-                                <span>دفع آمن ومضمون</span>
-                            </div>
-                        </div>
-                        <div class="payment-card-icon"><i data-lucide="landmark" style="width: 36px; height: 36px;"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== GETTING STARTED SECTION ==================== -->
-    <section class="getting-started">
-        <div class="getting-started-container">
-            <div class="getting-started-header">
-                <h2>
-                    <span class="gradient-orange">ابدأ الآن</span><i data-lucide="sparkles" class="sparkle"></i>
-                </h2>
-                <p class="getting-started-subtitle">انضم إلى آلاف العملاء السعداء واستمتع بتجربة تسوق لا مثيل لها</p>
-            </div>
-
-            <div class="steps-cards-grid">
-                <div class="step-card card-pink-gradient">
-                    <div class="card-number">1</div>
-                    <h3 class="card-title">تسجيل الدخول</h3>
-                    <ul class="card-features">
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>إنشاء حساب مجاني</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>إدارة الطلبات بسهولة</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>الحصول على عروض حصرية</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="step-card card-orange-gradient">
-                    <div class="card-number">2</div>
-                    <h3 class="card-title">استعراض المتاجر</h3>
-                    <ul class="card-features">
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>استعراض المعلومات التجارية</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>مقارنة المنتجات والأسعار</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>العثور على أفضل العروض</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="step-card card-yellow-gradient">
-                    <div class="card-number">3</div>
-                    <h3 class="card-title">ابدأ التسوق</h3>
-                    <ul class="card-features">
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>تعرف على طرق الدفع المتاحة</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>اختر الوسيلة الأنسب لك</span>
-                        </li>
-                        <li>
-                            <span class="check-icon"><i data-lucide="check"></i></span>
-                            <span>تسوق بثقة وأمان تام</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <a href="#" class="main-cta-button">
-                    ← سجل الآن وابدأ التسوق
-                </a>
-                <p class="cta-subtitle">
-                    لا تحتاج إلى بطاقة ائتمان • التسجيل مجاني 100%
-                </p>
-            </div>
-        </div>
-    </section>
+    // Initial Render
+    renderProducts(products);
+    renderCart();
+  </script>
 </body>
 </html>
