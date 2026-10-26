@@ -116,6 +116,64 @@
     </div>
   </header>
 
+  <!-- OPERATIONAL ESCROW & COD RISK COMMAND BAR -->
+  <section class="border-b border-emerald-500/20 bg-slate-950/80 px-4 sm:px-6 lg:px-8 py-5">
+    <div class="max-w-7xl mx-auto space-y-4">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h3 class="text-sm font-black text-white">نظام حماية تجار جينورا — Cloudflare Edge Invariants</h3>
+          <span class="text-[11px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded-md font-bold">بوابة الدفع عند الاستلام وحجز الشحن</span>
+        </div>
+        <button id="invariants-btn" data-feature="invariants-btn" onclick="geenoraAction('invariants')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30">
+          فحص توازن الضمان (Escrow Invariants)
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- COD RISK & DEPOSIT GATE -->
+        <div id="cod-risk-deposit-gate" data-feature="cod-risk-deposit-gate" class="p-4 rounded-xl bg-slate-900/90 border border-emerald-500/30 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">1. حماية الدفع عند الاستلام (COD)</span>
+            <span class="text-[10px] bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded">عربون 85 ج.م إلزامي</span>
+          </div>
+          <p class="text-xs text-slate-300">
+            فحص أرقام الهواتف على القائمة السوداء الوطنية لرافضي الاستلام مع حجز عربون الشحن (85 جنيه) عبر InstaPay لمنع تكبد التاجر خسائر المرتجع.
+          </p>
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="geenoraAction('codrisk')" class="px-4 py-2 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 transition">
+              فحص القائمة السوداء واحتجاز عربون 85 ج.م
+            </button>
+          </div>
+        </div>
+
+        <!-- NDR LIE DETECTOR PANEL -->
+        <div id="ndr-lie-detector-panel" data-feature="ndr-lie-detector-panel" class="p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">2. كاشف كذب مندوب الشحن (NDR Lie Detector)</span>
+            <span class="text-[10px] bg-rose-500/20 text-rose-300 font-bold px-2 py-0.5 rounded">كشف الادعاء الوهمي</span>
+          </div>
+          <p class="text-xs text-slate-300">
+            مطابقة إحداثيات GPS للمندوب عند تسجيل "العميل لا يجيب" مع موقع العميل وتوثيق رسالة واتساب التلقائية لكشف المندوب المتهرب.
+          </p>
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="geenoraAction('ndr')" class="px-4 py-2 text-xs font-bold rounded-lg bg-amber-600 hover:bg-amber-500 text-white shadow-md shadow-amber-600/20 transition">
+              تدقيق محاولة تسليم بوسطة (كشف الادعاء)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Execution Log -->
+      <div class="p-3 rounded-lg bg-black/60 border border-slate-800">
+        <pre id="geenora-live-output" class="text-emerald-400 font-mono text-[11px] overflow-auto max-h-24" dir="ltr">Ready on Cloudflare Edge. All features integrated into main DOM.</pre>
+      </div>
+    </div>
+  </section>
+
+
   <!-- Hero Section -->
   <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-800">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent pointer-events-none"></div>
@@ -685,5 +743,37 @@
     renderProducts(products);
     renderCart();
   </script>
+
+
+
+<script>
+async function geenoraAction(act) {
+  const out = document.getElementById('geenora-live-output');
+  out.textContent = 'Executing on Cloudflare Edge...';
+  try {
+    let res;
+    if (act === 'codrisk') {
+      res = await fetch('/api/geenora/orders/cod-risk-check', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ buyerPhone: '+201099887766', grossPiasters: 240000, priorRefusalCount: 3 })
+      });
+    } else if (act === 'ndr') {
+      res = await fetch('/api/geenora/ndr-event', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ orderId: 'ord-egy-101', courierId: 'bosta-egy-44', statedReason: 'CUSTOMER_UNREACHABLE', customerConfirmedDelivery: false })
+      });
+    } else if (act === 'invariants') {
+      res = await fetch('/api/invariants');
+    }
+    const data = await res.json();
+    out.textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    out.textContent = 'Error: ' + err.message;
+  }
+}
+</script>
+
 </body>
 </html>
