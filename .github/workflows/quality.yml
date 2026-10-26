@@ -1,0 +1,29 @@
+name: Geenora Marketplace Quality Gate
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  verify-escrow-invariants:
+    name: Escrow Invariants & COD Intercept
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Escrow Invariants Test Suite
+        run: node --test test/geenora.invariants.test.mjs
+
+      - name: Verify Ubiquitous Language Contract
+        run: |
+          test -f UBIQUITOUS_LANGUAGE.md
+          grep -q "MarketplaceOrder" UBIQUITOUS_LANGUAGE.md
+          grep -q "EscrowConservationEquation" UBIQUITOUS_LANGUAGE.md

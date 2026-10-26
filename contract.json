@@ -1,0 +1,24 @@
+{
+  "app": "geenora-marketplace",
+  "cloudflareProject": "geenora-marketplace",
+  "deployDir": ".",
+  "liveUrl": "https://geenora-marketplace.pages.dev",
+  "bannedStrings": [],
+  "features": [
+    {
+      "id": "cod-risk-deposit-gate",
+      "description": "Egyptian COD refusal blacklist check and 85 EGP shipping deposit gate",
+      "autoClick": false
+    },
+    {
+      "id": "ndr-lie-detector-panel",
+      "description": "Courier fake non-delivery attempt detector and WhatsApp confirmation audit",
+      "autoClick": false
+    },
+    {
+      "id": "invariants-btn",
+      "description": "Escrow balance and COD invariant check",
+      "autoClick": true
+    }
+  ]
+}
