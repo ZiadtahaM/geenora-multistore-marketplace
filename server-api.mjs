@@ -44,12 +44,13 @@ function maskPhone(phone) {
   return "*** MASKED ***";
 }
 
-function sendJson(res, statusCode, data) {
+function sendJson(res, statusCode, data, extraHeaders = {}) {
   res.writeHead(statusCode, {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type"
+    "Access-Control-Allow-Headers": "Content-Type, Idempotency-Key",
+    ...extraHeaders
   });
   res.end(JSON.stringify(data));
 }
@@ -113,17 +114,26 @@ const server = http.createServer(async (req, res) => {
 
     // 4. Create Order with Escrow Lock
     if (req.method === "POST" && pathname === "/api/geenora/orders") {
+      const idemKey = req.headers["idempotency-key"];
+      if (idemKey) {
+        const cached = GeenoraStore.getIdempotentResponse(idemKey);
+        if (cached) {
+          return sendJson(res, 200, cached, { "X-Cache": "HIT-IDEMPOTENCY" });
+        }
+      }
       const body = await parseJsonBody(req);
       const order = EscrowOrderAggregate.createOrder(body);
-      const store = GeenoraStore.load();
-      store.orders.push(order);
-      GeenoraStore.save(store);
-      return sendJson(res, 201, {
+      GeenoraStore.insertOrder(order);
+      const respPayload = {
         ...order,
         buyerPhone: maskPhone(order.buyerPhone),
         buyerPhoneMasked: maskPhone(order.buyerPhone),
         privacyCompliance: "Egyptian PDPL Law 151/2020 Active"
-      });
+      };
+      if (idemKey) {
+        GeenoraStore.saveIdempotentResponse(idemKey, pathname, respPayload);
+      }
+      return sendJson(res, 201, respPayload, { "X-Cache": "MISS" });
     }
 
     // 5. Deliver Order and Release Escrow
@@ -136,8 +146,7 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 404, { error: `Order ${orderId} not found` });
       }
       const updatedOrder = EscrowOrderAggregate.deliverOrder(store.orders[orderIndex]);
-      store.orders[orderIndex] = updatedOrder;
-      GeenoraStore.save(store);
+      GeenoraStore.updateOrder(updatedOrder);
       return sendJson(res, 200, {
         ...updatedOrder,
         buyerPhone: maskPhone(updatedOrder.buyerPhone),
@@ -171,12 +180,20 @@ const server = http.createServer(async (req, res) => {
 
     // 7. Urbana PropTech Lead Dispatch
     if (req.method === "POST" && pathname === "/api/urbana/leads") {
+      const idemKey = req.headers["idempotency-key"];
+      if (idemKey) {
+        const cached = GeenoraStore.getIdempotentResponse(idemKey);
+        if (cached) {
+          return sendJson(res, 200, cached, { "X-Cache": "HIT-IDEMPOTENCY" });
+        }
+      }
       const body = await parseJsonBody(req);
       const lead = PropTechBrokerRouter.routeLead(body);
-      const store = GeenoraStore.load();
-      store.proptechLeads.push(lead);
-      GeenoraStore.save(store);
-      return sendJson(res, 201, lead);
+      GeenoraStore.insertLead(lead);
+      if (idemKey) {
+        GeenoraStore.saveIdempotentResponse(idemKey, pathname, lead);
+      }
+      return sendJson(res, 201, lead, { "X-Cache": "MISS" });
     }
 
     // 7b. Urbana PropTech Lead Stale Reassignment (Karim 10-Minute Decay Watchdog)
@@ -185,10 +202,12 @@ const server = http.createServer(async (req, res) => {
       let reassignedCount = 0;
       store.proptechLeads = (store.proptechLeads || []).map(lead => {
         const updated = PropTechBrokerRouter.reassignIfStale(lead);
-        if (updated.reassigned && !lead.reassigned) reassignedCount++;
+        if (updated.reassigned && !lead.reassigned) {
+          reassignedCount++;
+          GeenoraStore.updateLead(updated);
+        }
         return updated;
       });
-      GeenoraStore.save(store);
       return sendJson(res, 200, {
         success: true,
         reassignedCount,
@@ -200,9 +219,7 @@ const server = http.createServer(async (req, res) => {
     if (req.method === "POST" && pathname === "/api/geenora/orders/cod-intercept") {
       const body = await parseJsonBody(req);
       const codOrder = CodPreShipmentEngine.interceptOrder(body);
-      const store = GeenoraStore.load();
-      store.orders.push(codOrder);
-      GeenoraStore.save(store);
+      GeenoraStore.insertOrder(codOrder);
       return sendJson(res, 201, {
         success: true,
         order: {
@@ -223,8 +240,7 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 404, { error: `Order ${body.orderId} not found` });
       }
       const confirmed = CodPreShipmentEngine.confirmOrder(store.orders[orderIndex]);
-      store.orders[orderIndex] = confirmed;
-      GeenoraStore.save(store);
+      GeenoraStore.updateOrder(confirmed);
       return sendJson(res, 200, {
         success: true,
         order: {
@@ -370,6 +386,10 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`[GEENORA & URBANA ESCROW API] running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  server.listen(PORT, () => {
+    console.log(`[GEENORA & URBANA ESCROW API] running on port ${PORT}`);
+  });
+}
+
+export { server };
