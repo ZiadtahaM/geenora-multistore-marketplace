@@ -1,4 +1,4 @@
-name: Geenora Marketplace Quality Gate
+name: Geenora Marketplace 5-Gate Verification CI
 
 on:
   push:
@@ -6,10 +6,14 @@ on:
   pull_request:
     branches: [main, master]
 
+permissions:
+  contents: read
+
 jobs:
-  verify-escrow-invariants:
-    name: Escrow Invariants & COD Intercept
+  gate-verification:
+    name: 5-Gate Architectural & Domain Elimination Pipeline
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,7 +23,35 @@ jobs:
         with:
           node-version: 22
 
-      - name: Run Escrow Invariants Test Suite
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python Test Dependencies
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: Initialize SQLite Schema
+        run: node -e "import('./lib/domain/marketplace-escrow-ledger.mjs').then(m => m.GeenoraStore.getDb())"
+
+      - name: Gate 1 - SQLite Hard Relational Constraints & Trigger Sabotage Test
+        run: python scripts/gate1-sqlite-sabotage.test.py
+
+      - name: Gate 2 - Pure Domain Core & Escrow Math Suite
+        run: node scripts/gate2-domain-invariants.test.mjs
+
+      - name: Gate 3 - Stateful Server, Idempotency & Outbox Persistence Test
+        run: node scripts/gate3-idempotency-outbox.test.mjs
+
+      - name: Gate 4 - Human-Only DOM Zero-Slop Scanner
+        run: python scripts/gate4-dom-slop-scanner.test.py
+
+      - name: Gate 5 - Playwright Hard-Reload & SQLite Persistence Proof
+        run: python scripts/gate5-playwright-hard-reload.test.py
+
+      - name: Regression Suite - Escrow Invariants Test Suite
         run: node --test test/geenora.invariants.test.mjs
 
       - name: Verify Ubiquitous Language Contract

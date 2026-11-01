@@ -1,0 +1,9 @@
+{
+  "name": "geenora-marketplace",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/gate2-domain-invariants.test.mjs && node scripts/gate3-idempotency-outbox.test.mjs && python scripts/gate1-sqlite-sabotage.test.py && python scripts/gate4-dom-slop-scanner.test.py && python scripts/gate5-playwright-hard-reload.test.py && node --test test/geenora.invariants.test.mjs"
+  }
+}
