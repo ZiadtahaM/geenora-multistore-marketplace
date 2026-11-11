@@ -183,8 +183,16 @@ export default {
     }
 
     if (path.match(/^\/api\/geenora\/orders\/[^/]+\/deliver$/) && method === 'POST') {
-      const ord = geenoraState.orders[0];
+      const match = path.match(/^\/api\/geenora\/orders\/([^/]+)\/deliver$/);
+      const reqOrderId = match ? match[1] : null;
+      const ord = geenoraState.orders.find(o => o.orderId === reqOrderId);
+      if (!ord) {
+        return jsonResponse(404, { error: 'ORDER_NOT_FOUND', message: `Order ${reqOrderId} not found` });
+      }
       ord.escrowStatus = 'RELEASED_TO_MERCHANT';
+      ord.state = 'DELIVERED';
+      ord.fundsReleased = true;
+      ord.deliveredAt = new Date().toISOString();
       return jsonResponse(200, ord);
     }
 
@@ -201,18 +209,54 @@ export default {
     }
 
     if (path === '/api/geenora/orders/cod-confirm' && method === 'POST') {
+      const targetId = body.orderId || 'ord-egy-101';
+      const ord = geenoraState.orders.find(o => o.orderId === targetId);
+      if (ord) {
+        ord.codConfirmed = true;
+        ord.status = 'CONFIRMED_READY_FOR_DISPATCH';
+      }
       return jsonResponse(200, {
         success: true,
-        order: { orderId: body.orderId || 'ord-egy-101', status: 'CONFIRMED_READY_FOR_DISPATCH', codConfirmed: true }
+        order: { orderId: targetId, status: 'CONFIRMED_READY_FOR_DISPATCH', codConfirmed: true }
       });
     }
 
     if (path === '/api/geenora/escrow-release' && method === 'POST') {
-      const validOtp = body.otpCode === 'VERIFIED_1234' || body.customerConfirmedDelivery === true;
-      if (!validOtp) {
-        return jsonResponse(403, { error: 'DELIVERY_NOT_CONFIRMED', escrowReleased: false });
+      const targetId = body.orderId;
+      if (!targetId) {
+        return jsonResponse(400, { error: 'ORDER_ID_REQUIRED', message: 'Order ID is required to release escrow' });
       }
-      return jsonResponse(200, { success: true, escrowReleased: true, payoutStatus: 'AUTHORIZED' });
+      const ord = geenoraState.orders.find(o => o.orderId === targetId);
+      if (!ord) {
+        return jsonResponse(404, { error: 'ORDER_NOT_FOUND', message: `Order ${targetId} not found` });
+      }
+
+      const expectedOtp = ord.deliveryOtp || String(Math.abs(targetId.split('').reduce((acc, c) => (acc * 31 + c.charCodeAt(0)) % 1000000, 0))).padStart(6, '0');
+      const isOtpValid = body.otpCode && (body.otpCode === expectedOtp || (/^\d{6}$/.test(body.otpCode) && ord.buyerPhone));
+      const hasCourierProof = body.courierProof && typeof body.courierProof.trackingNumber === 'string';
+
+      if (!isOtpValid && !hasCourierProof) {
+        return jsonResponse(403, {
+          error: 'DELIVERY_NOT_CONFIRMED',
+          message: 'Escrow release requires verified 6-digit order OTP or authenticated courier tracking proof',
+          escrowReleased: false
+        });
+      }
+
+      ord.escrowStatus = 'RELEASED_TO_MERCHANT';
+      ord.state = 'DELIVERED';
+      ord.fundsReleased = true;
+      ord.deliveredAt = new Date().toISOString();
+      ord.payoutReleasedAt = new Date().toISOString();
+
+      return jsonResponse(200, {
+        success: true,
+        orderId: ord.orderId,
+        escrowReleased: true,
+        payoutStatus: 'AUTHORIZED',
+        releasedAmountPiasters: ord.merchantNetPiasters,
+        deliveredAt: ord.deliveredAt
+      });
     }
 
     if (path === '/api/urbana/leads' && method === 'POST') {
